@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "基于pxe和kickstart的linux操作系统深度自定义安装--原理与实践"
+title:  "基于pxe/kickstart/tftp/http的linux操作系统深度自定义安装--原理与实践"
 date:   2017-09-01 10:28:53 +0800
 categories: pxe kickstart
 ---
@@ -11,6 +11,8 @@ categories: pxe kickstart
 * 网络安装操作系统原理解析
 * Linux下initrd.img作用理解和添加自定义二进制程序
 * 自动化 
+
+*本文重点是讲定制化安装的原理，PXE/TFTP/Kickstart全套的安装和使用，本文不详细介绍*
  
 ## 一、缘由：
  
