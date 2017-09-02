@@ -1,23 +1,28 @@
 ---
 layout: post
-title:  "使用AWS Lambda优化图片格式"
+title:  "使用AWS Lambda处理图片示例"
 date:   2017-09-02 16:35:01 +0800
 categories: aws lambda
 ---
 
-# 当用户上传一个图片文件到S3上面的时候，触发Lambda函数，生成一个thumbnail小图片。
+# 基于AWS Lambda的图片处理示例
+
+#### 需求场景：用户上传一个图片文件到S3上时，自动触发Lambda函数，生成一个thumbnail小图片。
+如图片上传到source-bucket，则会在source-bucketresized中生成同样文件名的小图片  
+   **_source-bucket/image.png -> source-bucketresized/image.png_**
 
 参考链接：<http://docs.aws.amazon.com/lambda/latest/dg/with-s3-example-deployment-pkg.html>  
 github链接：<https://github.com/wfhu/aws-Lambda-S3-Thumbnail>
 
 
-主要的技术点：
+### 主要的技术点：
+* python2.7环境运行通过
 * PUT事件触发Lambda函数执行
 * 使用 [boto3](https://pypi.python.org/pypi/boto3) package来进行S3相关操作
 * 使用 [PIL](http://www.pythonware.com/products/pil/) package来进行图片的处理
 * Lambda运行环境支持/tmp目录
 
-常见使用场景：
+### 常见使用场景：
 * 图片自动打水印
 * 图片压缩
 * 原图上传后，为各种使用场景自动处理生成不同大小的图片
