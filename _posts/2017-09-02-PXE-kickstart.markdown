@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "基于pxe/kickstart/tftp/http的linux操作系统深度自定义安装--原理与实践"
-date:   2017-09-01 10:28:53 +0800
+date:   2017-09-02 14:08:23 +0800
 categories: pxe kickstart
 ---
 
