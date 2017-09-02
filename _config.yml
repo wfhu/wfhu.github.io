@@ -24,8 +24,6 @@ github_username:  wfhu
 
 # Build settings
 markdown: kramdown
-parse_block_html: true
-markdown_ext: "markdown, mkdown, mkdn, mkd, md"
 theme: minima
 plugins:
   - jekyll-feed
