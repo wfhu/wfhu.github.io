@@ -5,7 +5,7 @@ date:   2017-09-02 18:37:20 +0800
 categories: python Prometheus redis
 ---
 
-# python编写Prometheus exporter获取redis自定义数据
+# python编写Prometheus exporter获取redis数据
 
 近期有使用Prometheus监控我们的redis，使用了第三方的[redis_exportor](https://github.com/oliver006/redis_exporter)，但是它无法获取*redis实例的maxmemory*，我就通过自己编写python脚本自己来获取这个数据了
 
