@@ -141,7 +141,7 @@ scrape_configs:
 
 到这里，你就可以用Grafana来查看Swarm集群和运行的服务的信息了
 
-![grafana Docker Swarm Dashboard](/images/grafana_template_screenshot.jpg)
+![grafana Docker Swarm Dashboard](/assets/grafana_template_screenshot.jpg)
 
 
 
