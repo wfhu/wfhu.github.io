@@ -5,7 +5,16 @@ date:   2017-09-02 14:32:34 +0800
 categories: docker
 ---
 
-# 使用开源工具，从零开始搭建完整生态的swarm mode生产环境集群
+## 使用开源工具，从零开始搭建完整生态的swarm mode生产环境集群
+相关代码、模版在github: <https://github.com/wfhu/docker-swarm-full-stack>
+
+
+
+
+
+
+
+			
 
 
 ## 本文档不包含说明的一些配套工具
@@ -17,13 +26,13 @@ categories: docker
 * Grafana展示前端，用于展示监控数据
 
 ## 主要使用以下工具：
-集群管理和编排：Docker Swarm Mode   
-容器监控：cAdvisor + prometheus    
-节点监控：node_exporter + prometheus  
-监控展示：grafana    
-前端UI界面：portainer  
-日志搜集展示和搜索：ELK+logspout    
-持久化存储：NFS+NAS  
+* 集群管理和编排：Docker Swarm Mode   
+* 容器监控：cAdvisor + prometheus    
+* 节点监控：node_exporter + prometheus  
+* 监控展示：grafana    
+* 前端UI界面：portainer  
+* 日志搜集展示和搜索：ELK+logspout  
+* 持久化存储：NFS+NAS  
 
 
 
@@ -79,7 +88,7 @@ docker swarm join --token SWMTKN-1-YOUR-WORKER-TOKEN 192.168.33.5:2377
 
 
 
-## 然后，我们需要把监控的agent进程起来 
+## 第二步，我们需要把监控的agent进程起来 
 
 ### 1. use cAdvisor to monitor container's CPU/Memory/Network    
 ```
@@ -173,7 +182,7 @@ Then, you can visit http://your-ip-address:9000 to visit the portainer UI
 
 
 
-## 第四部，搜集stdout/stderr日志，传送到ElasticSearch中
+## 第四步，搜集stdout/stderr日志，传送到ElasticSearch中
 
 log stream like this : *container stdout* -> *logspout in each node* -> *logstash inside the Cluster* -> *outside ElasticSearch*
 
