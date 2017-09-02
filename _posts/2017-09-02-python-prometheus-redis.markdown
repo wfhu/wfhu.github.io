@@ -38,7 +38,14 @@ if __name__ == '__main__':
 
 ```
 
+需要监控的redis的相关信息都存放在/export/scripts/sa/redisList.txt文件中了：
+```
+r-XXXXX.redis.rds.aliyuncs.com 6379 95 我的REDIS实例-010 contact_user:XXX,YYY||150123456,138123456
+r-XXXXX.redis.rds.aliyuncs.com 6379 95 我的测试实例002 contact_user:XXX,YYY||150123456,138123456
+```
 
+
+运行我的python exportor：
 ```bash
 python readRedis.py
 ```
@@ -50,10 +57,6 @@ python readRedis.py
 
 
 监控redis的grafana模版可供 [下载](/assets/grafana_redis_template.json)
-
-
-
-
 
 
 
