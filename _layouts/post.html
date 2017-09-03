@@ -11,6 +11,8 @@ layout: default
 <p>&nbsp;</p>
 <p></p>
 
+
+<!--
 <div id="related">
   <h2>Related Posts</h2>
   <ul class="posts">
@@ -19,3 +21,42 @@ layout: default
     {% endfor %}
   </ul>
 </div>
+-->
+
+
+{% capture the_collection %}{{page.collection}}{% endcapture %}
+  {% if page.collection %}
+    {% assign  document = site[the_collection]  %}
+  {% endif %}
+<!-- <h1>TITLE: {{ page.title }}</h1> -->
+{% for links in document  %}
+  {% if links.title == page.title %}
+    {% unless forloop.first %}
+      {% assign prevurl = prev.url %}
+      {% assign prevtitle = prev.title %}
+      {% assign prevdate = prev.date%}
+    {% endunless %}
+    {% unless forloop.last %}
+      {% assign next = document[forloop.index] %}
+      {% assign nexturl = next.url %}
+      {% assign nexttitle = next.title %}
+      {% assign nextdate = next.date%}
+    {% endunless %}
+  {% endif %}
+  {% assign prev = links %}
+{% endfor %}
+
+<script>
+document.body.onkeyup = function(e){
+if (e.keyCode == '37') { window.location = '{{prevurl}}'; }
+if (e.keyCode == '39') { window.location = '{{nexturl}}'; }
+};
+</script>
+
+<ul class="posts">
+{% if prevurl %}<li><span>{{ prevdate | date_to_string }}</span> &raquo; <a href="{{prevurl}}" class="prev">前一篇：{{prevtitle}}</a></li>{% endif %}<br />
+
+{% if nexturl %}<li><span>{{ nextdate | date_to_string }}</span> &raquo; <a href="{{nexturl}}" class="nxt">后一篇：{{nexttitle}}</a></li>{% endif %}
+</ul>
+
+
