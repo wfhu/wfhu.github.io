@@ -138,3 +138,8 @@ def checkISP(parentdir,YunWeiUserList,YeWuUserList):
 
 
 
+Grafana模板可供下载：[三小时模板](/assets/grafana-network-template.json)    [详细信息模板](/assets/grafana-network-detail-template.json)
+
+
+
+
