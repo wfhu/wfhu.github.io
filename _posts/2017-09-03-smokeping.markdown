@@ -120,7 +120,14 @@ def checkISP(parentdir,YunWeiUserList,YeWuUserList):
 
 ### 第五：数据存入Graphite中
 按自己的定的规则，自定义数据存储路径，方便使用Grafana的模板
-比如我就是按 *NETWORk.{{机房名}}.{{监控类别}}.{{监控点分类}}.{{监控点ip}}* 作为存储前缀的
+比如我就是按以下路径存储smokeping数据到Graphite中
+
+```
+*NETWORk.\{\{机房名\}\}.\{\{监控类别\}\}.\{\{监控点分类\}\}.\{\{监控点ip\}\}*
+```
+
+
+
 
 
 ![PXE](/assets/grafana-graphite01.png)
