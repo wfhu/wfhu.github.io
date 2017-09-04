@@ -1,6 +1,15 @@
 ---
 layout: default
 ---
+
+
+<style>
+// body {background-color: powderblue; font-family:Tahoma,Verdana,STHeiTi,simsun,sans-serif;} // styles applied to body tag
+body {font-family:Tahoma,Verdana,STHeiTi,simsun,sans-serif;} // styles applied to body tag
+h1 {color: blue;} // styles applied to h1 tag
+p {color: red;} // styles applied to p tag
+</style>
+
 <div id="post">
 {{ content }}
 </div>
@@ -58,5 +67,6 @@ if (e.keyCode == '39') { window.location = '{{nexturl}}'; }
 
 {% if nexturl %}<li><span>{{ nextdate | date_to_string }}</span> &raquo; <a href="{{nexturl}}" class="nxt">后一篇：{{nexttitle}}</a></li>{% endif %}
 </ul>
+
 
 
