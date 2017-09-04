@@ -3,14 +3,26 @@ layout: default
 ---
 
 
-<style>
-// body {background-color: powderblue; font-family:Tahoma,Verdana,STHeiTi,simsun,sans-serif;} // styles applied to body tag
-body {font-family:Tahoma,Verdana,STHeiTi,simsun,sans-serif;} // styles applied to body tag
+<style type="text/css">
+body {
+background-color: white; 
+font-family:"Microsoft Yahei",Tahoma,Verdana,STHeiTi,simsun,sans-serif;
+} 
 h1 {color: blue;} // styles applied to h1 tag
+h2 {color: yellow;} // styles applied to h2 tag
+h3 {color: brown;} // styles applied to h3 tag
+h4 {color: red;} // styles applied to h1 tag
+h5 {color: green;} // styles applied to h1 tag
 p {color: red;} // styles applied to p tag
 </style>
 
-<div id="post">
+<style type="text/css">
+.post{ border:2px solid #ABF; padding: 8px; } 
+</style>
+
+
+<div class="post" id="post">
+
 {{ content }}
 </div>
 
