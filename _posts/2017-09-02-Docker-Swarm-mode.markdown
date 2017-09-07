@@ -232,3 +232,6 @@ docker service create \
 *如果你的其他container的日志都是直接输出到stdout/stderr, 你最好限制一下日志文件的大小 *[max-size](https://docs.docker.com/engine/admin/logging/json-file/)* 默认的日志驱动是JSON File log driver*
 
 
+
+## 存在的问题：
+* Swarm Mode本身缺少autoscaling的能力，暂时需要手动操作来伸缩
