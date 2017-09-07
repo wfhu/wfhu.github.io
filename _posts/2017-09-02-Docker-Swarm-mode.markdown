@@ -17,7 +17,7 @@ categories: docker
 			
 
 
-## 本文档不包含说明的一些配套工具
+## 本文档不包含说明的一些配套工具，这些需要各位去查看另外的文档
 * 一套可用的ELK工具，用于接收和展示搜集的日志
 * 一个可用的docker镜像仓库
 * 一台或多台基于CentOS7.3的服务器，root权限
@@ -25,14 +25,15 @@ categories: docker
 * Prometheus服务，用于接收和存储监控数据
 * Grafana展示前端，用于展示监控数据
 
-## 主要使用以下工具：
+## 整套生产环境主要使用以下工具：
 * 集群管理和编排：Docker Swarm Mode   
 * 容器监控：cAdvisor + prometheus    
 * 节点监控：node_exporter + prometheus  
-* 监控展示：grafana    
+* 监控展示：Grafana    
 * 前端UI界面：portainer  
 * 日志搜集展示和搜索：ELK+logspout  
 * 持久化存储：NFS+NAS  
+* 外部负载均衡器：阿里云SLB
 
 
 
