@@ -1,11 +1,11 @@
 ---
 layout: post
-title:  "提升定位问题效率：使用Grafana/Graphite优化Smokeping"
+title:  "使用Grafana/Graphite优化Smokeping网络监控"
 date:   2017-09-03 10:47:15 +0800
 categories: grafana graphite smokeping
 ---
 
-# 使用Grafana/Graphite优化Smokeping
+# 使用Grafana/Graphite优化Smokeping网络监控
 ## 主要是把整个优化过程的思路和大概的技术实现分享出来
 
 ### 第一：公司长期使用Smokeping监控机房的网络质量，Smokeping存在的问题：
