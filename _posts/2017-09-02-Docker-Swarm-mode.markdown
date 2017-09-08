@@ -58,6 +58,12 @@ systemctl start docker
 
 systemctl enable docker
 
+```
+
+
+
+#### 确认docker是否工作正常
+```
 docker run hello-world
 
 ```
@@ -83,6 +89,20 @@ docker swarm join --token SWMTKN-1-YOUR-MANAGER-TOKEN 192.168.33.5:2377
 docker swarm join --token SWMTKN-1-YOUR-WORKER-TOKEN 192.168.33.5:2377
 
 ```
+
+### 备注：如忘了上面的TOKEN，可以通过在Manager节点上运行以下命令来获取：
+#### 获取worker token
+```
+docker swarm join-token worker
+```
+
+#### 获取manager token
+```
+docker swarm join-token manager
+```
+
+
+
 
 
 
@@ -157,7 +177,7 @@ scrape_configs:
 
 ## 第三步，安装管理UI工具portainer
 
-### first we need to reconfigure docker-engine to liston on TCP address, other than the UNIX socket
+### 默认docker-engine只监听UNIX Socket的，先把docker-engine配置修改，新增TCP监听，重启docker-engine
 ```
 sed -i "/^ExecStart/c ExecStart=/usr/bin/dockerd -H unix:///var/run/docker.sock -H tcp://$(ip a |grep global |grep eth0 |awk '{print $2}' |cut -d'/' -f1):2375" /usr/lib/systemd/system/docker.service
 grep '^ExecStart' /usr/lib/systemd/system/docker.service
@@ -165,7 +185,7 @@ systemctl daemon-reload
 systemctl restart docker
 ```
 
-### Now, make a directory and start the portainer
+### 在每个host主机上创建相应的目录，然后启动portainer服务
 ```
 mkdir -p /data/portainer_prod
 
@@ -185,14 +205,16 @@ Then, you can visit http://your-ip-address:9000 to visit the portainer UI
 
 ## 第四步，搜集stdout/stderr日志，传送到ElasticSearch中
 
-log stream like this : *container stdout* -> *logspout in each node* -> *logstash inside the Cluster* -> *outside ElasticSearch*
+日志流向如下 : *container stdout/stderr* -> *host主机上的logspout服务* -> *集群内部的logstash服务* -> *外部的ElasticSearch*
 
-### 1. create a new overlay network for the log transfer, as logspout need to communicate with logstash
+**由于logspout需要访问内部的logstash服务，我们这里利用自定义overlay网络的DNS功能，这样logspout只要指定访问logstash服务的服务名就可以顺利地访问到该服务了，logstash可以随意在集群内漂移**
+
+### 1. 创建user-defined overlay网络*lognet*，专门给logspout和logstash互相沟通使用
 ```
 docker network create --driver overlay lognet
 ```
 
-### 2. create the logstash service, listening on TCP/19300 port
+### 2. 创建我的logstash服务：mylogstash，监听TCP/19300端口
 ```
 docker service create \
     --name mylogstash \
@@ -201,15 +223,15 @@ docker service create \
     logstash -e 'input { tcp { port => 19300 mode => "server" ssl_enable => false } } output { elasticsearch { hosts => ["YOUR-ElasticSearch-ADDRESS:PORT"] index => "my-docker-cluster"} }'
 ```
 
-### 3. create the logspout service
+### 3. 创建logspout服务
 
-#### build your own image from *logspout*, add logstash module
+#### 由于logspout默认不支持logstash，需要自己打包进去logstash plugin，代码可以参考[mylogsptou](https://github.com/wfhu/docker-swarm-full-stack)
 ```
 cd mylogspout && docker build -t mylogspout:v1 .
 ```
-if there's error, please make sure mylogspout/build.sh file has exec bit set, check [here](https://github.com/gliderlabs/logspout/issues/238) for more information
+如果打包镜像时有报错，注意mylogspout/build.sh要有执行权限, 参考[here](https://github.com/gliderlabs/logspout/issues/238)
 
-#### then tag/push your locally build image to YOUR-REGISTRY
+#### tag/push你的镜像到你的镜像仓库中
 ```
 # docker login -u YOUR-USER-NAME -p YOUR-PASSWORD  YOUR-REGISTRY-ADDRESS
 # docker tag mylogspout:v1 YOUR-REGISTRY-ADDRESS/mylogspout:v1
@@ -228,6 +250,8 @@ docker service create \
     -e ROUTE_URIS=logstash+tcp://mylogstash:19300 \
     YOUR-REGISTRY-ADDRESS/mylogspout:v1 
 ```
+**注意：ROURTE_URIS里面直接写_mylogstash_就可以访问到logstash服务了**
+
 
 *如果你的其他container的日志都是直接输出到stdout/stderr, 你最好限制一下日志文件的大小 *[max-size](https://docs.docker.com/engine/admin/logging/json-file/)* 默认的日志驱动是JSON File log driver*
 
@@ -235,3 +259,7 @@ docker service create \
 
 ## 存在的问题：
 * Swarm Mode本身缺少autoscaling的能力，暂时需要手动操作来伸缩
+* portainer UI缺少资源限制(CPU/memory)的能力，如果有这方面的需求，只能使用命令行
+
+
+
