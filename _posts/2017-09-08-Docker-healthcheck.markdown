@@ -13,6 +13,8 @@ HEALTHCHECK 指令告诉 Docker 如何判断容器的状态是否正常，这是
 在没有 HEALTHCHECK 指令前，Docker 引擎只可以通过容器内主进程是否退出来判断容器是否状态异常。如果程序进入死锁或者死循环状态，应用进程并不会退出，但该容器已经无法提供服务了。在 1.12 以前，Docker 无法检测到容器的这种状态，从而不会重新调度，可能导致部分容器已经无法提供服务了却还在接受用户请求。
 
 
+## 第一：我们来测试一下这个HEALTHCHECK
+
 ### 1. 编写一个简单的web服务并开启健康检查：
 ```
 FROM nginx:alpine
@@ -29,7 +31,7 @@ HEALTHCHECK CMD wget -O /dev/null http://localhost:80/
 ```
 [root@VM_33_14_centos ~]# docker ps
 CONTAINER ID        IMAGE                                                                           COMMAND                  CREATED             STATUS                            PORTS                                          NAMES
-1cafd6fae2cf        registry.cn-shanghai.aliyuncs.com/boyaa-test/opsdemo_opsweb:20170908_1753_209   "nginx -g 'daemon ..."   3 seconds ago       Up 3 seconds (health: starting)   80/tcp
+1cafd6fae2cf        registry.cn-shanghai.aliyuncs.com/YOUR-REGISTRY-NAME/opsdemo_opsweb:20170908_1753_209   "nginx -g 'daemon ..."   3 seconds ago       Up 3 seconds (health: starting)   80/tcp
 ```
 
 
@@ -37,7 +39,7 @@ CONTAINER ID        IMAGE                                                       
 ```
 [root@VM_33_14_centos ~]# docker ps
 CONTAINER ID        IMAGE                                                                           COMMAND                  CREATED              STATUS                        PORTS                                          NAMES
-1cafd6fae2cf        registry.cn-shanghai.aliyuncs.com/boyaa-test/opsdemo_opsweb:20170908_1753_209   "nginx -g 'daemon ..."   About a minute ago   Up About a minute (healthy)   80/tcp 
+1cafd6fae2cf        registry.cn-shanghai.aliyuncs.com/YOUR-REGISTRY-NAME/opsdemo_opsweb:20170908_1753_209   "nginx -g 'daemon ..."   About a minute ago   Up About a minute (healthy)   80/tcp 
 ```
 
 
@@ -46,7 +48,7 @@ CONTAINER ID        IMAGE                                                       
 
 
 
-## 需要特别注意，监控检查的命令，必须确保每次执行结果都保持一致
+## 第二：特别注意，健康检查命令，必须确保每次执行结果都保持一致
 如果将上面的检查命令修改一下：
 ```
 FROM nginx:alpine
@@ -63,7 +65,7 @@ HEALTHCHECK CMD wget http://localhost:80/
 ```
 [root@VM_33_14_centos ~]# docker ps
 CONTAINER ID        IMAGE                                                                           COMMAND                  CREATED             STATUS                                     PORTS                                          NAMES
-5aab61378e58        registry.cn-shanghai.aliyuncs.com/boyaa-test/opsdemo_opsweb:20170908_1804_210   "nginx -g 'daemon ..."   3 seconds ago       Up Less than a second (health: starting)   80/tcp
+5aab61378e58        registry.cn-shanghai.aliyuncs.com/YOUR-REGISTRY-NAME/opsdemo_opsweb:20170908_1804_210   "nginx -g 'daemon ..."   3 seconds ago       Up Less than a second (health: starting)   80/tcp
 ```
 
 
@@ -71,7 +73,7 @@ CONTAINER ID        IMAGE                                                       
 ```
 [root@VM_33_14_centos ~]# docker ps
 CONTAINER ID        IMAGE                                                                           COMMAND                  CREATED              STATUS                        PORTS                                          NAMES
-5aab61378e58        registry.cn-shanghai.aliyuncs.com/boyaa-test/opsdemo_opsweb:20170908_1804_210   "nginx -g 'daemon ..."   About a minute ago   Up About a minute (healthy)   80/tcp 
+5aab61378e58        registry.cn-shanghai.aliyuncs.com/YOUR-REGISTRY-NAME/opsdemo_opsweb:20170908_1804_210   "nginx -g 'daemon ..."   About a minute ago   Up About a minute (healthy)   80/tcp 
 ```
 
 
@@ -79,14 +81,14 @@ CONTAINER ID        IMAGE                                                       
 ```
 [root@VM_33_14_centos ~]# docker ps
 CONTAINER ID        IMAGE                                                                           COMMAND                  CREATED             STATUS                     PORTS                                          NAMES
-5aab61378e58        registry.cn-shanghai.aliyuncs.com/boyaa-test/opsdemo_opsweb:20170908_1804_210   "nginx -g 'daemon ..."   2 minutes ago       Up 2 minutes (unhealthy)   80/tcp 
+5aab61378e58        registry.cn-shanghai.aliyuncs.com/YOUR-REGISTRY-NAME/opsdemo_opsweb:20170908_1804_210   "nginx -g 'daemon ..."   2 minutes ago       Up 2 minutes (unhealthy)   80/tcp 
 ```
 
 #### 随后容器被重新调度，**注意CONTAINER ID的变化**：
 ```
 [root@VM_33_5_centos ~]# docker ps
 CONTAINER ID        IMAGE                                                                           COMMAND                  CREATED              STATUS                        PORTS                     NAMES
-cb1da285ac16        registry.cn-shanghai.aliyuncs.com/boyaa-test/opsdemo_opsweb:20170908_1804_210   "nginx -g 'daemon ..."   About a minute ago   Up About a minute (healthy)   80/tcp                    opsweb.1.i4u54q7cdm7pz6f2x2fmufrs6
+cb1da285ac16        registry.cn-shanghai.aliyuncs.com/YOUR-REGISTRY-NAME/opsdemo_opsweb:20170908_1804_210   "nginx -g 'daemon ..."   About a minute ago   Up About a minute (healthy)   80/tcp                    opsweb.1.i4u54q7cdm7pz6f2x2fmufrs6
 ```
 
 
@@ -100,5 +102,11 @@ wget: can't open 'index.html': File exists
 
 
 
+
+
+## 第三：调试 HEALTHCHECK 可以使用以下命令：
+```
+docker inspect --format='{{json .State.Health}}' your-container-name
+```
 
 
