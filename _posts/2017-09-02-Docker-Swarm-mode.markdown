@@ -11,12 +11,6 @@ categories: docker
 
 
 
-
-
-
-			
-
-
 ## 本文档不包含说明的一些配套工具，这些需要各位去查看另外的文档
 * 一套可用的ELK工具，用于接收和展示搜集的日志
 * 一个可用的docker镜像仓库
@@ -24,6 +18,7 @@ categories: docker
 * 可用的NFS服务，用于存储的持久化
 * Prometheus服务，用于接收和存储监控数据
 * Grafana展示前端，用于展示监控数据
+* CI/CD：SVN + Jenkins，用于自动打包镜像和测试
 
 ## 整套生产环境主要使用以下工具：
 * 集群管理和编排：Docker Swarm Mode   
