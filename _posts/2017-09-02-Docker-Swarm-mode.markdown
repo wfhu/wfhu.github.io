@@ -251,8 +251,25 @@ docker service create \
 *如果你的其他container的日志都是直接输出到stdout/stderr, 你最好限制一下日志文件的大小 *[max-size](https://docs.docker.com/engine/admin/logging/json-file/)* 默认的日志驱动是JSON File log driver*
 
 
+### 4. 限制默认的json-file的日志大小，防止日志量过大
+```
+# cat /etc/docker/daemon.json
+ 
+{
+  "log-driver": "json-file",
+  "log-opts": {
+    "max-size": "50m"
+  }
+}
+  
+# systemctl restart docker
+```
 
-## 存在的问题：
+
+
+
+
+## 集群还存在的问题：
 * Swarm Mode本身缺少autoscaling的能力，暂时需要手动操作来伸缩
 * portainer UI缺少资源限制(CPU/memory)的能力，如果有这方面的需求，只能使用命令行
 
