@@ -194,7 +194,7 @@ docker service create \
     -H unix:///var/run/docker.sock
 ```
 
-Then, you can visit http://your-ip-address:9000 to visit the portainer UI
+通过 http://your-ip-address:9000 可以访问portainer UI
 
 
 
