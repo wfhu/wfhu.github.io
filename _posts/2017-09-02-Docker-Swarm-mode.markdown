@@ -270,8 +270,9 @@ docker service create \
 
 
 ## 集群还存在的问题：
-* Swarm Mode本身缺少autoscaling的能力，暂时需要手动操作来伸缩
-* portainer UI缺少资源限制(CPU/memory)的能力，如果有这方面的需求，只能使用命令行
+* Swarm Mode本身缺少autoscaling的能力，伸缩服务需要手动操作
+* Swarm本身没有UI界面，而portainer UI缺少资源限制(CPU/memory)的能力，如果有这方面的需求，只能使用命令行
+
 
 
 
