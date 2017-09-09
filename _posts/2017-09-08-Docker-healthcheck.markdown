@@ -104,7 +104,7 @@ wget: can't open 'index.html': File exists
 
 
 
-## 第三：调试 HEALTHCHECK 可以使用以下命令：
+## 第三：调试 HEALTHCHECK 可以使用以下命令，可以查看到健康检查历史和检查命令的输出结果：
 ```
 docker inspect --format='{{json .State.Health}}' your-container-name
 ```

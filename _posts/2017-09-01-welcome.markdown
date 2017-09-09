@@ -12,7 +12,8 @@ categories: welcome
 * 监控系统：Zabbix/Prometheus/Smokeping/Graphite/Grafana
 * IDC/CDN/DNS
 * LDAP
-* 个人和团队管理
 * AWS/阿里云/腾讯云
-
+* 个人和团队管理/绩效关联
+* Infrastructure as Code
+* Docker/Kubernetes/Mesos
 
