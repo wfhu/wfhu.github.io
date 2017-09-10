@@ -6,14 +6,15 @@ categories: welcome
 ---
 工作将近10年了，积累了很多技术文档和工作经验，特开次博客，分享给大家
 
-* Linux
-* 网络
-* python
+主要涉及的领域如下：
+* Linux/网络
+* Python/C
 * 监控系统：Zabbix/Prometheus/Smokeping/Graphite/Grafana
 * IDC/CDN/DNS
 * LDAP
 * AWS/阿里云/腾讯云
-* 个人和团队管理/绩效关联
 * Infrastructure as Code
 * Docker/Kubernetes/Mesos
+* 安全/扫描/OWASP
+* 个人和团队管理/绩效关联
 
