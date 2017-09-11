@@ -29,6 +29,9 @@ fi
 
 ![UI-env](/assets/docker-environment-UI.jpg)
 
+命令行启动服务，可以使用``--env``参数
+
+
 这样，不同的环境，一份代码完全通用了。
 
 
