@@ -140,7 +140,7 @@ def checkISP(parentdir,YunWeiUserList,YeWuUserList):
 展示最近3小时的网络数据，毕竟我们最主要关心的是近期的网络质量情况：  
 ![Grafana](/assets/grafana-dog01.png)
 
-想看其他时间段的数据？没问题，另外来一个目标，查看任意时长的网络数据：  
+想看其他时间段的数据？没问题，另外来一个模板，查看任意时长的网络数据：  
 ![Grafana](/assets/grafana-dog02.png)
 
 
